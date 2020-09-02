@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "LeveAdicional";
+}
+<style>
+    li {
+        text-align: justify;
+    }
+</style>
+<div style="height:50px;"></div>
+<h2 style="text-align:center;">RECOMENDACIONES</h2>
+<br />
+<p style="text-align:justify;">
+    <strong>@ViewData["nombre"]</strong>, sigue las siguientes recomendaciones:
+</p>
+<div style="height:10px"></div>
+<p>
+    Se recomienda aislamiento y seguir el protocolo establecido:
+</p>
+<ul>
+    <li>
+        Consultar con un médico público
+    </li>
+    <li>
+        Teniendo una receta médica, ingresar nuevamente a  esta aplicación en el apartado <bold>“Monitoreo por síntomas”</bold>
+    </li>
+    <li>
+        Seguir instrucciones
+    </li>
+</ul>
+<div style="height:20px;"></div>
+
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("Index","Home")'">SALIR</button>
+</div>

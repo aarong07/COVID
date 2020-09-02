@@ -1,0 +1,22 @@
+﻿
+<div style="height:50px;"></div>
+<script type="text/javascript">
+
+function yesnoCheck() {
+    if (document.getElementById('1').checked) {
+        document.getElementById('div1').style.display = 'block';
+    }
+    else document.getElementById('div1').style.display = 'none';
+
+}
+
+</script>
+Yes <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="1"> 
+No <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="noCheck"><br>
+    <div id="div1" style="display:none">
+        If yes, explain: <input type='text' id='yes' name='yes'><br>
+        What can we do to accommodate you?  <input type='text' id='acc' name='acc'>
+    </div>
+        
+        other 3<input type='text' id='other3' name='other3'><br>
+        other 4<input type='text' id='other4' name='other4'><br>

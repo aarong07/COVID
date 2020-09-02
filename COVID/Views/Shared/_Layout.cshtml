@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>*@
+    <script src="~/Content/JsBarcode.all.min.js"></script>
+    <style>
+
+        #logo {
+            position: absolute;
+            padding: 10px;
+            right: 15%;
+        }
+
+        #logoTI {
+            position: absolute;
+            padding: 0px;
+            right: 15%;
+        }
+
+        #text {
+            text-align: center;
+            padding: 0px;
+            right: 15%;
+        }
+    </style>
+
+</head>
+<body onload="BotonesVisibles(); BotonesVisibles_Dipositivo(); ">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("COVID19", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <div id="logo">
+
+                    <img src="~/Content/LogoFlat.png" alt="" style="width:90px; height:auto;"> &nbsp;|&nbsp;
+                    <img src="~/Content/LogoSersal.png" alt="Sersal" style="width:90px; height:auto;">&nbsp;|&nbsp;
+                    <img src="~/Content/LogoSolpack.png" alt="Solpack" style="width:90px; height:auto;">
+
+                </div>
+
+                @*<ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    </ul>*@
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div>
+                <p style="float:left">
+                    &copy; @DateTime.Now.Year - CAJAS DE CARTÓN SULTANA
+                </p>
+                <p style="float:right">
+                    &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <img src="~/Content/logoTIColor.png" alt="logoTI" style="width:100px; height:auto;">
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    @*<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>*@
+    <script src="~/Content/JsBarcode.all.min.js"></script>
+    @*<script src="~/Content/datetime/build/jquery.datetimepicker.full.js"></script>*@
+</body>
+</html>
+
+<script>
+    var fecha =  @DateTime.Now.ToString("ddMM");
+    var txt = "Hola";
+    var nomina = document.getElementById("nomi").value;
+    var name = document.getElementById("name").value;
+    var str = name;
+    var res = str.split(" ", 1);
+    document.getElementById("shortname").innerHTML = res;
+    var total = "0" + fecha + "-" + nomina + "-" + res;
+    JsBarcode("#barcode", total, {
+        format: "CODE39",
+        lineColor: "#ffff",
+        width: 1,
+        height: 40,
+        background: false,
+        displayValue: false
+    });
+</script>

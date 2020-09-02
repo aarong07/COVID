@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "PositivoRecom";
+}
+<div style="height:50px;"></div>
+@*<h2 style="text-align:center;">RECOMENDACIONES</h2>*@
+<style>
+    p {
+        text-align: justify;
+    }
+
+    .button {
+        border: 1px solid #900202;
+        background-color: #D00202; /* Green */
+        color: white;
+        padding: 30px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        width: 100%;
+        height: 20%;
+    }
+
+    .button1 {
+        background-color: #D00202;
+        color: white;
+        border: 2px solid #900202;
+    }
+
+        .button1:hover {
+            background-color: #D00202;
+            color: white;
+        }
+
+    .button2 {
+        background-color: white;
+        color: black;
+        border: 2px solid #169abe;
+    }
+
+        .button2:hover {
+            background-color: #169abe;
+            color: black;
+        }
+
+    .button3 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ffd800;
+    }
+
+        .button3:hover {
+            background-color: #ffd800;
+            color: black;
+        }
+
+    .button4 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ffd800;
+    }
+
+        .button4:hover {
+            background-color: #ffd800;
+            color: black;
+        }
+
+    .button5 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ff0000;
+    }
+
+        .button5:hover {
+            background-color: #ff0000;
+            color: black;
+        }
+</style>
+<br />
+
+
+
+
+<div style="height:10px"></div>
+
+
+<div class="button button1">
+    <p style="text-align:justify;">
+        <br />
+        <label style="font-size:25px;"> <strong>¡@ViewData["nombre"]</strong>, gracias por tu colaboración!</label>
+        <br />
+        <br />
+        <label style="font-size:16px;">
+            Busca atención médica inmediata. Sin embargo, siempre debes llamar a tu doctor o centro de atención sanitaria antes de presentarte en el lugar en cuestión.
+        </label>
+        <br />
+        <label style="font-size:16px;">
+            Quédate en casa.
+        </label>
+        <br />
+
+    </p>
+</div>
+
+
+<div style="height:20px"></div>
+
+
+<p>
+    Te recomendamos seguir las siguientes Indicaciones:
+</p>
+
+<div style="height:10px"></div>
+
+
+
+<p>
+    El aislamiento es la medida que se adopta para separar a las personas
+    infectadas por SARS-CoV-2, el virus que causa el COVID-19, de otras personas
+    que no están infectadas.
+</p>
+<p>
+    <strong>
+        ¿Quiénes deben aislarse?
+    </strong>
+</p>
+<p>
+    Las personas en aislamiento deben quedarse en sus casas hasta que sea seguro
+    estar en contacto con otras personas. En el hogar, cualquier persona enferma o
+    infectada debe separarse de las demás personas y permanecer en una habitación o
+    área específica "para enfermos" y usar un baño separado (si está disponible).
+</p>
+<ul>
+    <li>
+        Las personas que tienen COVID-19
+    </li>
+    <li>
+        Las personas que tienen síntomas del COVID-19 y pueden recuperarse en sus casas
+    </li>
+    <li>
+        Las personas que no tienen síntomas (son asintomáticas), pero dieron positivo
+        en la prueba PCR de detección de infección por SARS-CoV-2
+    </li>
+</ul>
+<p>
+    <strong>
+        Medidas que hay que tomar
+    </strong>
+</p>
+<p>
+    Quédese en casa, excepto para conseguir atención médica
+</p>
+<ul>
+    <li>
+        Permanezca en una habitación separada del resto de los miembros del hogar, si es posible
+    </li>
+    <li>
+        Use un baño separado, si es posible
+    </li>
+    <li>
+        Evite tener contacto con otros miembros del hogar y con las mascotas<
+    </li>
+    <li>
+        No comparta los artículos del hogar de uso personal como tazas, toallas y utensilios
+    </li>
+    <li>
+        Use cubrebocas cuando tenga que interactuar con otra personas
+    </li>
+    <li>
+        Monitoree sus síntomas diariamente  por medio de esta aplicación por 14 días a partir de su aislamiento.
+    </li>
+
+</ul>
+<div style="height:10px;"></div>
+<div style="text-align:center;">
+    <img src="~/Content/Imagen1.png" height="300" />
+</div>
+<div style="height:10px;"></div>
+<p>
+    <strong>
+        IMPORTANTE: Si tiene algún signo de advertencia de emergencia (como dificultad para respirar),
+        busque atención de servicios médicos de emergencia de inmediato.
+    </strong>
+</p>
+<div style="height:10px;"></div>
+
+<p style="text-align:justify; color:orangered; font-weight:bold;">
+    En caso de no seguir el protocolo, omitir o mentir con la información proporcionada,  la empresa esta facultada para la recisión inmediata del contrato sin responsabilidad por parte de la empresa.
+    <br />
+</p>
+<div style="height:10px"></div>
+<p style="text-align:justify; font-weight:bold;">
+    <strong>Referencias</strong>
+    <br />
+</p>
+
+<p>
+    <a href="https://espanol.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/quarantine.html" target="_blank">
+        espanol.cdc.gov/coronavirus/2019-ncov/if-you-are-sick/quarantine.html
+    </a>
+</p>
+
+<div style="text-align:center;">
+    <img src="~/Content/NivelesOxigeno.png" />
+</div>
+
+<div style="height:10px"></div>
+
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("Index","Home")'">SALIR</button>
+</div>

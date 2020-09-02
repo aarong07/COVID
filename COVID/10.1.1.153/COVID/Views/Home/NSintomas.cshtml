@@ -1,0 +1,102 @@
+﻿@model IEnumerable<COVID.Models.trabajador>
+@{
+    ViewBag.Title = "NSintomas";
+}
+    <script>
+        function validateForm() {
+            if (!document.getElementById("sintoma1").checked && !document.getElementById("sintoma2").checked && !document.getElementById("sintoma3").checked && !document.getElementById("sintoma4").checked && !document.getElementById("sintoma5").checked && !document.getElementById("sintoma6").checked && !document.getElementById("sintoma7").checked && !document.getElementById("sintoma8").checked && !document.getElementById("sintoma9").checked && !document.getElementById("sintoma10").checked && !document.getElementById("sintoma11").checked && !document.getElementById("sintoma12").checked && !document.getElementById("sintoma13").checked) {
+                document.getElementById("alerta").style.display = 'block';
+                return false;
+            }
+        }
+    </script>
+<div style="height:50px;"></div>
+<h2 style="text-align:center">NOTIFICAR ALGUNOS SÍNTOMAS</h2>
+<p style="text-align:justify">
+    <br />
+    COVID-19 afecta de distintas maneras en función de cada persona. La mayoría de las personas que se contagian presentan síntomas de intensidad leve o moderada, y se recuperan sin necesidad de hospitalización.
+</p>
+<p>
+    ¡Hola <strong>@ViewData["nombre"]</strong>! indica que sintomas presentas:
+</p>
+<style>
+    /*#bordesazules {
+        border-width: 3px 5px 4px 5px;
+        border-style: solid;
+        border-color: darkblue;
+        border-radius: 5px;
+    }*/
+</style>
+@using (Html.BeginForm("LeveAdicionalGrave", "Home", FormMethod.Get, new { id = "Busqueda" }))
+{
+    <form >
+        <!--Leves-->
+        <div id="bordesazules">
+            @*<div><strong><p style="float:right; text-align:right;">Sintomas Leves&nbsp;&nbsp; </p></strong></div>*@
+            <div>
+                <label><input type="checkbox" name="sintoma1" id="sintoma1" value="2" />&nbsp;Fiebre superiro a los 37.5 grados</label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="sintoma2" id="sintoma2" value="2" />&nbsp;Tos Seca</label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="sintoma3" id="sintoma3" value="2" />&nbsp;Cansancio</label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="sintoma4" id="sintoma4" value="2" />&nbsp;Molestias y Dolores</label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="sintoma5" id="sintoma5" value="2" />&nbsp;Dolor de garganta</label>
+            </div>
+        </div>
+        <div style="height:5px;"></div>
+        <!--Adicional-->
+        <div id="bordesazules">
+            @*<div><strong><p style="float:right; text-align:right;">Sintomas Adicionales&nbsp;&nbsp; </p></strong></div>*@
+            <div>
+                <label><input type="checkbox" name="sintoma6" id="sintoma6" value="3" />&nbsp;Diarrea</label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="sintoma7" id="sintoma7" value="3" />&nbsp;Conjuntivitis</label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="sintoma8" id="sintoma8" value="3" />&nbsp;Dolor de cabeza.</label>
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox" name="sintoma9" id="sintoma9" value="3" />&nbsp;Perdida del sentido del olfato y del gusto
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input type="checkbox" name="sintoma10" id="sintoma10" value="3" />&nbsp;Erupciones cutaneas
+                    o perdida del color en los dedos de las manos o los pies
+                </label>
+            </div>
+        </div>
+        <!--Graves-->
+        <div style="height:5px;"></div>
+        <div id="bordesazules">
+            @*<div><strong><p style="float:right; text-align:right;">Sintomas Graves&nbsp;&nbsp; </p></strong></div>*@
+            <div>
+                <label style="">
+                    <input type="checkbox" name="sintoma11" id="sintoma11" value="4" />&nbsp;Dificultad para respirar o sensacion de falta de aire
+                </label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="sintoma12" id="sintoma12" value="4" />&nbsp;Dolor o presion del pecho</label>
+            </div>
+            <div>
+                <label><input type="checkbox" name="sintoma13" id="sintoma13" value="4" />&nbsp;Incapacidad para hablar o moverse</label>
+            </div>
+
+        </div>
+        <div style="height:20px;"></div>
+        <div>
+            <label style="display:none; color:orangered;" id="alerta"> * Seleccione al menos un sintoma. </label>
+<br />
+            <button type="submit" class="btn btn-primary" onclick="return validateForm();">NOTIFICAR</button>
+
+        </div>
+    </form>
+}

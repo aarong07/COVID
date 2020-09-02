@@ -1,0 +1,209 @@
+﻿@model IEnumerable<COVID.Models.trabajador>
+@{
+    ViewBag.Title = "Inicio";
+}
+<script>
+    function solonum(e) {
+        var key = e.keyCode || e.which,
+            tecla = String.fromCharCode(key).toLowerCase(),
+            letras = "0123456789",
+            especiales = [8, 37, 39, 46],
+            tecla_especial = false;
+
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+        }
+    }
+    function soloLetras(e) {
+        var key = e.keyCode || e.which,
+            tecla = String.fromCharCode(key).toLowerCase(),
+            letras = " áéíóúabcdefghijklmnñopqrstuvwxyz",
+            especiales = [8, 37, 39, 46],
+            tecla_especial = false;
+
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+        }
+    }
+   
+</script>
+<style>
+    /*label {
+        display: inline-block;
+        width: 140px;
+    }*/
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 30px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        width: 40%;
+        height: 20%;
+    }
+
+    .button1 {
+        background-color: white;
+        color: black;
+        border: 2px solid #10c0f1;
+    }
+
+        .button1:hover {
+            background-color: #10c0f1;
+            color: black;
+        }
+
+    .button2 {
+        background-color: white;
+        color: black;
+        border: 2px solid #169abe;
+    }
+
+        .button2:hover {
+            background-color: #169abe;
+            color: black;
+        }
+
+    .button3 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ffd800;
+    }
+
+        .button3:hover {
+            background-color: #ffd800;
+            color: black;
+        }
+
+    .button4 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ffd800;
+    }
+
+        .button4:hover {
+            background-color: #ffd800;
+            color: black;
+        }
+
+    .button5 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ff0000;
+    }
+
+        .button5:hover {
+            background-color: #ff0000;
+            color: black;
+        }
+</style>
+<div style="height:50px;"></div>
+<h2 style="text-align:center;">Monitoreo de COVID-19</h2>
+<div style="height:30px;"></div>
+@using (Html.BeginForm("Update", "Home", FormMethod.Get))
+{
+    <form >
+        <div>
+            <p><strong>En caso de que tus datos no sean los correctos, favor de actualizarlos: </strong></p>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Numero de Nomina:</label>
+                    <input type="text" maxlength="7" value="@ViewData["Nomina"]" name="nomina1" id="nomina" onkeypress="return solonum(event)" class="form-control" required autocomplete="off" />
+                </div>
+                @*<div class="col-md-3">
+        <div style="height:25px;"></div>
+            <button type="submit" class="btn btn-primary col-md-3 form-control" name="buscar" value="1">Buscar</button>
+         </div>*@
+                <div class="col-md-3">
+                    <div style="height:15px;"></div>
+                    <label>Nombre Empleado:</label>
+                    @foreach (var item in Model)
+                    {
+                        <label name="nombre">@Html.DisplayFor(modelItem => item.Nombre)</label>
+                    }
+                </div>
+                <div class="col-md-3">
+                    <label>Telefono:</label>
+                    <input class="form-control" name="telefono" id="telefono" value="@ViewData["Telefono"]" type="text" maxlength="10" onkeypress="return solonum(event)" required/>
+                </div>
+                <div class="col-md-3">
+                    <label>Sitio:</label>
+                    <div>
+                        @Html.DropDownList("sitio", (IEnumerable<SelectListItem>)ViewBag.sitioList, "--Sitio de Trabajo--", new { @class = "form-control", @ViewData = "Sitio", required = "--Sitio de Trabajo--" })
+                    </div>
+                </div>
+            </div>
+            <div style="height:10px;"></div>
+            <div class="row">
+                
+                <div class="col-md-3">
+                    <label>Area:</label>
+                    <div>
+                        @Html.DropDownList("area", (IEnumerable<SelectListItem>)ViewBag.areaList, "--Area de Trabajo--", new { @class = "form-control", @ViewData = "Area", required = "--Area de Trabajo--" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>Proceso de Trabajo:</label>
+                    <div>
+                        @Html.DropDownList("proceso", (IEnumerable<SelectListItem>)ViewBag.procList, "--Proceso de Trabajo--", new { @class = "form-control", @ViewData = "Proceso", required = "--Proceso de Trabajo--" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>Turno:</label>
+                    <div>
+                        @Html.DropDownList("turno", (IEnumerable<SelectListItem>)ViewBag.turnoList, "--Turno de Trabajo--", new { @class = "form-control", @ViewData = "Turno", required = "--Turno de Trabajo--" })
+                    </div>
+                </div>
+                <div style="height:25px;"></div>
+            </div>
+            <div style="height:20px;"></div>
+            <div>
+                @*<button type="submit" class="btn btn-danger btn form-control"> Siguiente </button>*@
+                <button type="submit" class="button button1" name="boton" value="1" onclick="">Tengo Algunos Sintomas</button>
+                <button type="submit" class="button button2" name="boton" value="2">Monitoreo por sintomas</button>
+                <button type="submit" class="button button3" name="boton" value="3">Tuve contacto con una persona sospechosa o confirmada</button>
+                <button type="submit" class="button button4" name="boton" value="4">Monitoreo por contacto y sospecha</button>
+                <button type="submit" class="button button5" name="boton" value="5">Sali positivo en la prueba</button>
+            </div>
+        </div>
+    </form>
+    <div style="height:20px;"></div>
+    @*<div>
+        <button onclick="location.href='@Url.Action("Index","Home")'" class="form-control btn btn-primary">Regresar</button>
+    </div>*@
+}
+
+
+
+<script>
+    //var nomina = document.getElementById("nomina");
+    //nomina.onkeyup = function () {
+    //    var Busqueda = document.getElementById("Busqueda");
+    //    Busqueda.submit();
+    //}
+</script>
+
+
+
+
+

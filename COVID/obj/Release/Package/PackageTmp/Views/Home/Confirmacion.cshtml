@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Confirmacion";
+}
+<div style="height:50px"></div>
+
+<h3>¿Estas seguro que deseas volver al <strong>Monitoreo Diario</strong>?</h3>
+<div style="height:15px;"></div>
+@using (Html.BeginForm("Update", "Home", FormMethod.Get))
+{
+<div>
+    <button type="submit" class="btn btn-primary" name="boton" value="7">Si</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary" name="boton" value="8">No</button>
+</div>
+    
+}
+
+

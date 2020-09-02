@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Grave";
+}
+
+<div style="height:50px;"></div>
+<h2 style="text-align:center;">Recomendaciones</h2>
+<p style="text-align:justify;">
+    <strong>@ViewData["nombre"]</strong>, sigue las siguientes recomendaciones:
+</p>
+<div style="height:10px"></div>
+<p style="text-align:justify">
+    Busca atención médica inmediata. Sin embargo, siempre debes llamar a tu doctor o centro de atención sanitaria antes de presentarte en el lugar en cuestión.
+
+
+</p>
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("Index","Home")'">SALIR</button>
+</div>

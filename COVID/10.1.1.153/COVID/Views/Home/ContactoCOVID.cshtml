@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "Monitoreo";
+}
+<script type="text/javascript">
+
+    function yesnoCheck() {
+        if (document.getElementById('1').checked) {
+            document.getElementById('div1').style.display = 'block';
+        }
+        else document.getElementById('div1').style.display = 'none';
+
+    }
+    function sinoCheck() {
+        if (document.getElementById('2').checked) {
+            document.getElementById('div2').style.display = 'block';
+        }
+        else document.getElementById('div2').style.display = 'none';
+
+    }
+    function pregunta1() {
+        if (document.getElementById('').checked) {
+            document.getElementById('');
+        }
+        else document.getElementById('');
+    }
+    function pregunta2() {
+        if (document.getElementById('').checked) {
+            document.getElementById('');
+        }
+        else document.getElementById('');
+    }
+    function pregunta3() {
+        if (document.getElementById('').checked) {
+            document.getElementById('');
+        }
+        else document.getElementById('');
+    }
+    $(function () {
+        $.datepicker.regional['es'] =
+        {
+            closeText: 'Cerrar',
+            prevText: 'Previo',
+            nextText: 'Próximo',
+
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            monthStatus: 'Ver otro mes', yearStatus: 'Ver otro año',
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            dateFormat: 'yy/mm/dd', firstDay: 0,
+            initStatus: 'Selecciona la fecha', isRTL: false
+        };
+        $.datepicker.setDefaults($.datepicker.regional['es']);
+
+        //miDate: fecha de comienzo D=días | M=mes | Y=año
+        //maxDate: fecha tope D=días | M=mes | Y=año
+        $("#datepicker1").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+        $("#datepicker2").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+        $("#datepicker3").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+        $("#datepicker4").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+</script>
+<div style="height:50px;"></div>
+<h2 style="text-align:center;">NOTIFICACIÓN DE CONTACTO CON UNA PERSONA SOSPECHOSA O CONFIRMADA </h2>
+<br />
+<p>¡Hola <strong>@ViewData["Nombre"]</strong>! Favor de contestar el cuestionario de protocolo.</p>
+@using (Html.BeginForm("Formulario", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+<form>
+    <div>
+        <p>
+            ¿Estuvo en algún evento o aglomeración en los últimos 14 días? &nbsp; &nbsp;
+            <label>Si <input type="radio" onclick="javascript: pregunta1();" name="evento" value="1"></label>
+            <label>No <input type="radio" onclick="javascript: pregunta1();" name="evento" value="0"></label>
+        </p>
+    </div>
+    <div>
+        <p>
+            ¿Ha viajado los últimos días? &nbsp; &nbsp;
+            <label>Si <input type="radio" onclick="javascript: pregunta2();" name="viaje" value="1"></label>
+            <label>No <input type="radio" onclick="javascript: pregunta2();" name="viaje" value="0"></label>
+    </div>
+    <div>
+        <p>
+            ¿Tuvo contacto con personal sospechoso o confirmado por COVID19? &nbsp; &nbsp;
+            <label>Si <input type="radio" onclick="javascript:yesnoCheck();" name="contacto" value="1" id="1"></label>
+            <label>No <input type="radio" onclick="javascript:yesnoCheck();" name="contacto" value="0" id="noCheck"></label>
+        </p>
+
+    </div>
+    <div id="div1" style="display:none">
+        <p>
+            <strong>En caso de contestar “Si”: </strong><br />
+            <div style="height:10px;"></div>
+            ¿Cuándo fue el ultimo día que estuvo en contacto de riesgo con el sospechoso o confirmado con COVID19?
+            <input type="text" id="datepicker1" name="fechacontacto" />
+        </p>
+        <p>
+            ¿Vive con el sospechoso o confirmado por COVID19? &nbsp; &nbsp;
+            <label>Si <input type="radio" onclick="javascript: pregunta3();" name="vive" value="1"></label>
+            <label>No <input type="radio" onclick="javascript: pregunta3();" name="vive" value="0"></label>
+        </p>
+        <p>
+            ¿Con quién vive y con quien ha convivido los últimos 14 días?
+            <input type="text" name="convivencia" />
+        </p>
+        <p>
+            ¿Dónde cree que se contagió?
+            <input type="text" name="lugarcontagio" />
+        </p>
+        <p>
+            ¿Desde cuándo cree que tuvo este contacto de contagio?
+            <input type="text" id="datepicker2" name="fechacontagio" />
+        </p>
+    </div>
+    <div>
+        <p>
+            ¿Ha presentado algún síntoma? &nbsp; &nbsp;
+            <label>Si <input type="radio" onclick="javascript:sinoCheck();" name="sintoma" value="1" id="2"></label>
+            <label>No <input type="radio" onclick="javascript:sinoCheck();" name="sintoma" value="0" id="noCheck"></label>
+        </p>
+    </div>
+    <div id="div2" style="display:none">
+        <p>
+            <strong>En caso de contestar “Sí”.</strong>
+        </p>
+        <p>
+            ¿Desde cuándo presenta síntomas?
+            <input type="text" id="datepicker3" name="fechasintoma" />
+        </p>
+        <p>
+            ¿Cómo ha sido su estado de salud previo a los síntomas?
+            <input type="text" name="estadosalud" />
+        </p>
+        <p>
+            ¿Qué síntomas son los que prevalecen?
+            <input type="text" name="sintomasprev" />
+        </p>
+        <p>
+            ¿Cuándo fue el último día que se presentó a laborar?
+            <input type="text" id="datepicker4" name="ultimodia" />
+        </p>
+        <p>
+            ¿Con quien tuvo contacto de trabajo?
+            <input type="text" name="contactolaboral" />
+        </p>
+        <p>
+            ¿Hay alguna persona o área de trabajo que consideres de riesgo por interacción?
+            <input type="text" name="interaccion" />
+        </p>
+        <p>
+            ¿Cuáles son las áreas de trabajo y comunes que más frecuento?
+            <input type="text" name="areas" />
+        </p>
+    </div>
+    <div style="height:10px"></div>
+
+    <button type="submit" class="btn btn-primary">NOTIFICAR</button>
+</form>
+}

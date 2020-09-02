@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Grave";
+}
+
+<style>
+    li {
+        text-align: justify;
+    }
+
+
+    /*label {
+            display: inline-block;
+            width: 140px;
+        }*/
+    .button {
+        border: 1px solid #900202;
+        background-color: #D00202; /* Green */
+        color: white;
+        padding: 30px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        width: 100%;
+        height: 20%;
+    }
+
+    .button1 {
+        background-color: #D00202;
+        color: white;
+        border: 2px solid #900202;
+    }
+
+        .button1:hover {
+            background-color: #D00202;
+            color: white;
+        }
+
+    .button2 {
+        background-color: white;
+        color: black;
+        border: 2px solid #169abe;
+    }
+
+        .button2:hover {
+            background-color: #169abe;
+            color: black;
+        }
+
+    .button3 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ffd800;
+    }
+
+        .button3:hover {
+            background-color: #ffd800;
+            color: black;
+        }
+
+    .button4 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ffd800;
+    }
+
+        .button4:hover {
+            background-color: #ffd800;
+            color: black;
+        }
+
+    .button5 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ff0000;
+    }
+
+        .button5:hover {
+            background-color: #ff0000;
+            color: black;
+        }
+</style>
+
+<div style="height:50px;"></div>
+@*<h2 style="text-align:center;">RECOMENDACIONES</h2>*@
+
+
+<div style="height:10px"></div>
+
+<div class="button button1">
+    <p style="text-align:justify;">
+        <br />
+        <label style="font-size:25px;"> <strong>@ViewData["nombre"]</strong></label>
+        <br />
+        <br />
+        <label style="font-size: 14px; font-weight: normal;">
+            Busca orientación contactando al
+        </label>
+        <label style="font-size: 22px; font-weight: normal;">
+            WhatsApp 81 3404 1826
+        </label>
+        <label style="font-size: 14px; font-weight: normal;">
+            para recibir indicaciones de los pasos a seguir.
+        </label>
+        <br />
+        <label style="font-size:14px; font-weight: normal;" ">
+            Sigue las recomendaciones sanitarias y de aislamiento.
+        </label>
+        <br />
+    </p>
+</div>
+
+<div style="height:25px"></div>
+
+<p style="text-align:justify;">
+    Atiende las siguientes recomendaciones:
+</p>
+<div style="height:10px"></div>
+<p style="text-align:justify">
+    Si alguien presenta alguno de estos signos, busque atención de servicios médicos de
+    emergencia de inmediato.
+    <ol>
+        <li>
+            Llame al 911 o llame antes a su centro de emergencias local: notifique al operador que
+            necesita atención para alguien que tiene o podría tener COVID-19.
+        </li>
+    </ol>
+    Llame antes de ir al médico
+    <ol>
+        <li>
+            Muchas visitas médicas de rutina se están posponiendo o realizando
+            por teléfono o telemedicina.
+        </li>
+        <li>
+            Si tiene una cita médica que no puede posponer, llame al consultorio de su médico e
+            infórmeles que tiene o podría tener COVID-19. Esto ayudará al personal del consultorio
+            a protegerse y proteger a otros pacientes.
+        </li>
+    </ol>
+
+</p>
+<div style="height:10px"></div>
+
+<div>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("Index","Home")'">SALIR</button>
+</div>

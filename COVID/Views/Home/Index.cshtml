@@ -1,0 +1,203 @@
+﻿@model IEnumerable<COVID.Models.trabajador>
+@{
+    ViewBag.Title = "Inicio";
+}
+    <style>
+            /*label {
+            display: inline-block;
+            width: 140px;
+        }*/
+            .button {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 30px 10px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 14px;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                width: 40%;
+                height: 20%;
+            }
+
+            .button1 {
+                background-color: white;
+                color: black;
+                border: 2px solid #10c0f1;
+            }
+
+                .button1:hover {
+                    background-color: #10c0f1;
+                    color: black;
+                }
+
+            .button2 {
+                background-color: white;
+                color: black;
+                border: 2px solid #169abe;
+            }
+
+                .button2:hover {
+                    background-color: #169abe;
+                    color: black;
+                }
+
+            .button3 {
+                background-color: white;
+                color: black;
+                border: 2px solid #ffd800;
+            }
+
+                .button3:hover {
+                    background-color: #ffd800;
+                    color: black;
+                }
+
+            .button4 {
+                background-color: white;
+                color: black;
+                border: 2px solid #ffd800;
+            }
+
+                .button4:hover {
+                    background-color: #ffd800;
+                    color: black;
+                }
+
+            .button5 {
+                background-color: white;
+                color: black;
+                border: 2px solid #ff0000;
+            }
+
+                .button5:hover {
+                    background-color: #ff0000;
+                    color: black;
+                }
+    </style>
+<script>
+    function solonum(e) {
+        var key = e.keyCode || e.which,
+            tecla = String.fromCharCode(key).toLowerCase(),
+            letras = "0123456789",
+            especiales = [8, 37, 39, 46],
+            tecla_especial = false;
+
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+        }
+    }
+    function soloLetras(e) {
+        var key = e.keyCode || e.which,
+            tecla = String.fromCharCode(key).toLowerCase(),
+            letras = " áéíóúabcdefghijklmnñopqrstuvwxyz",
+            especiales = [8, 37, 39, 46],
+            tecla_especial = false;
+
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+        }
+    }
+</script>
+<div style="height:50px;"></div>
+<h2 style="text-align:center;">MONITOREO DIARIO DE SALUD</h2>
+<div style="height:30px;"></div>
+<p>
+    En Sultana queremos garantizar la seguridad y salud de todos nuestros colaboradores,
+    por lo cual el llenado de la <strong>AUTOEVALUACIÓN DIARIA es de carácter obligatorio.</strong>
+</p>
+<br />
+@using (Html.BeginForm("Inicio", "Home", FormMethod.Get, new { id = "Busqueda" }))
+{
+<forms>
+    <div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>Número de Nómina:</label>
+                <input type="text" placeholder="#######" maxlength="7" name="nomina1" onkeypress="return solonum(event)" class="form-control"  required autocomplete="off" required />
+            </div>
+            <div class="col-md-3">
+                <div style="height:25px;"></div>
+                <button type="submit" class="btn btn-danger">Buscar</button>
+                @*<div>
+                <button onclick="location.href='@Url.Action("BotonesInicio","Home")'" class="form-control btn btn-primary">Regresar</button>
+                </div>*@
+            </div>
+            @*<div class="col-md-3">
+                <div style="height:15px;"></div>
+                <label>Nombre Empleado:</label>
+                <label></label>
+            </div>
+            <div class="col-md-3">
+                <label>Teléfono:</label>
+                <input class="form-control" name="telefono" id="telefono" value="@ViewData["Telefono"]" type="text" maxlength="10" onkeypress="return solonum(event)"  />
+            </div>
+        </div>
+        <div style="height:20px;"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>Sitio:</label>
+                <div>
+                    @Html.DropDownList("sitio", (IEnumerable<SelectListItem>)ViewBag.sitioList, "--Sitio de Trabajo--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Área:</label>
+                <div>
+                    @Html.DropDownList("area", (IEnumerable<SelectListItem>)ViewBag.areaList, "--Area de Trabajo--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Proceso de Trabajo:</label>
+                <div>
+                    @Html.DropDownList("proceso", (IEnumerable<SelectListItem>)ViewBag.procList, "--Proceso de Trabajo--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Turno:</label>
+                <div>
+                    @Html.DropDownList("turno", (IEnumerable<SelectListItem>)ViewBag.turnoList, "--Turno de Trabajo--", new { @class = "form-control" })
+                </div>
+            </div>*@
+            <div style="height:25px;"></div>
+        </div>
+        <div style="height:20px;"></div>
+        @*<div>
+            <button class="button button1">Tengo Algunos Sintomas</button>
+            <button class="button button2">Monitoreo por sintomas</button>
+            <button class="button button3">Tuve contacto con una persona sospechosa o confirmada</button>
+            <button class="button button4">Monitoreo por contacto y sospecha</button>
+            <button class="button button5">Sali positivo en la prueba</button>
+        </div>*@
+    </div>
+</forms>
+}
+@*<script>
+        var nomina = document.getElementById("nomina");
+        nomina.onkeyup = function () {
+            var Busqueda = document.getElementById("Busqueda");
+            Busqueda.submit();
+        }
+    </script>*@
+
+
+
+
+

@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "SospechaCOVID";
+}
+
+<div style="height:50px;"></div>
+<h2 style="text-align:center;">NOTIFICACIÓN DE PRUEBA POSITIVA</h2>
+<script>
+    function solonum(e) {
+        var key = e.keyCode || e.which,
+            tecla = String.fromCharCode(key).toLowerCase(),
+            letras = "0123456789",
+            especiales = [8, 37, 39, 46],
+            tecla_especial = false;
+
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+        }
+    }
+    function soloLetras(e) {
+        var key = e.keyCode || e.which,
+            tecla = String.fromCharCode(key).toLowerCase(),
+            letras = " áéíóúabcdefghijklmnñopqrstuvwxyz",
+            especiales = [8, 37, 39, 46],
+            tecla_especial = false;
+
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+        }
+    }
+    function yesnoCheck() {
+        if (document.getElementById('1').checked) {
+            document.getElementById('div1').style.display = 'block';
+        }
+        else document.getElementById('div1').style.display = 'none';
+
+    }
+
+</script>
+@using (Html.BeginForm("SubirArchivos3", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<form>
+    <div>
+        <p>
+            <br />
+            En caso de presentar síntomas el primer paso es la atención medica y el aviso a tu sitio
+            de trabajo.
+            <br />
+            Por favor, llena el siguiente formulario diariamente para avisarnos como se siente.
+
+        </p>
+    </div>
+    <div>
+        <label>Adjuntar comprobante de resultado positivo de COVID-19. </label> &nbsp;&nbsp;  Solo se requiere por única ocasión.
+        <input type="file" name="file" class="form-control" accept="application/pdf, image/png, image/pg" />
+
+        <div style="height:20px;"></div>
+
+    </div>
+    <div>
+        <strong>@ViewData["Nombre"]</strong> ¿Presenta algún síntoma? &nbsp;&nbsp;
+        <label>Si <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="1"></label>
+        <label>No <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="noCheck"></label>
+    </div>
+    <div id="div1" style="display:none">
+        <div class="row">
+            <div class="col-md-3">
+                <label>Temperatura Actual:</label>
+                <input class="form-control" name="temp" onkeypress="return solonum(event)" maxlength="4" placeholder="C°" />
+            </div>
+            <div class="col-md-3">
+                <label>Fiebre:</label>
+                <div>
+                    @Html.DropDownList("nivel", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Tos Seca:</label>
+                <div>
+                    @Html.DropDownList("nivel1", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Cansancio:</label>
+                <div>
+                    @Html.DropDownList("nivel2", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div style="height:20px;"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>Molestias y dolores:</label>
+                <div>
+                    @Html.DropDownList("nivel3", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Dolor de garganta:</label>
+                <div>
+                    @Html.DropDownList("nivel4", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Diarrea:</label>
+                <div>
+                    @Html.DropDownList("nivel5", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Conjuntivitis:</label>
+                <div>
+                    @Html.DropDownList("nivel6", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div style="height:20px;"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>Dolor de cabeza:</label>
+                <div style="height:20px;"></div>
+                <div>
+                    @Html.DropDownList("nivel7", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Perdida del sentido del olfato o del gusto:</label>
+                <div>
+                    @Html.DropDownList("nivel8", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Erupciones cutaneas o perdida del color en los dedos, manos o pies:</label>
+                <div>
+                    @Html.DropDownList("nivel9", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Dificultad para respirar o sensación de falta de aire:</label>
+                <div>
+                    @Html.DropDownList("nivel10", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div style="height:20px;"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>Dolor o presión en el pecho:</label>
+                <div>
+                    @Html.DropDownList("nivel11", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Incapacidad para hablar o moverse:</label>
+                <div>
+                    @Html.DropDownList("nivel12", (IEnumerable<SelectListItem>)ViewBag.intenso, "--Nivel de Intensidad--", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Rango de oxímetro:</label>
+                <div>
+                    @Html.DropDownList("nivel13", (IEnumerable<SelectListItem>)ViewBag.oximetro, "--Nivel de Oximetro--", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height:20px;"></div>
+    <div>
+        <button class="btn btn-primary" type="submit">NOTIFICAR</button>
+    </div>
+</form>
+}

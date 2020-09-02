@@ -1,0 +1,251 @@
+﻿@model COVID.Models.trabajador
+@{
+    ViewBag.Title = "NSintomas";
+}
+<script>
+
+    function validateForm() {
+
+        var _temperatura = document.getElementById("temperatura").value;
+
+        if (_temperatura < 35 || _temperatura > 45) {
+            document.getElementById("alertaTemperatura").style.display = 'block';
+            return false;
+
+        }
+    }
+    function checkTemperaturaSuperior() {
+        
+        var _temperatura = document.getElementById("temperatura").value;
+
+        if (_temperatura > 37.5) {
+            document.getElementById("1").checked = 'true';
+        } else {
+            document.getElementById("noCheck1").checked = 'true';
+        }
+    }
+    //function yesnoCheck() {
+    //    //if (document.getElementById('1').checked) {
+    //    //    document.getElementById('div1').style.display = 'block';
+    //    //}
+    //    //else document.getElementById('div1').style.display = 'none';
+    //}
+    function solonum(e) {
+        var key = e.keyCode || e.which,
+            tecla = String.fromCharCode(key).toLowerCase(),
+            letras = "0123456789",
+            especiales = [8, 37, 39, 46],
+            tecla_especial = false;
+
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true;
+                break;
+            }
+        }
+
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+            return false;
+        }
+    }
+
+</script>
+<div style="height:50px;"></div>
+<h2 style="text-align:center">AUTO EVALUACION DIARIA</h2>
+<p style="text-align:justify">
+    <br />
+    COVID-19 afecta de distintas maneras en función de cada persona. La mayoría de las personas que se contagian presentan síntomas de intensidad leve o moderada, y se recuperan sin necesidad de hospitalización.
+</p>
+<div style="height:20px;"></div>
+
+<div>
+    <strong>@ViewData["Nombre"]</strong>, coméntanos como te sientes hoy. Selecciona  <strong>Sí</strong> unicamente SÍ tienes sintomas de COVID-19, en caso contrario seleccionar  <strong>NO</strong>. &nbsp;&nbsp;
+
+</div>
+<style>
+    /*#bordesazules {
+        border-width: 3px 5px 4px 5px;
+        border-style: solid;
+        border-color: darkblue;
+        border-radius: 5px;
+    }*/
+</style>
+@using (Html.BeginForm("LeveAdicionalGrave", "Home", FormMethod.Get, new { id = "daysCalc" }))
+{
+<form name="daysCalc" action="" onsubmit="return validateForm()" method="post">
+
+    <div style="height:20px;"></div>
+    <div id="div1">
+        <!--Leves-->
+        
+        <div id="bordesazules">
+            @*<div><strong><p style="float:right; text-align:right;">Sintomas Leves&nbsp;&nbsp; </p></strong></div>*@
+            <div class="row">
+                <div class="col-md-12">
+                    <label>-&nbsp;Temperatura Actual:</label>
+                    <input type="text" name="temp" id="temperatura" placeholder="°C" required onkeyup="checkTemperaturaSuperior();"/>
+                    <label style="display:none; color:orangered;" id="alertaTemperatura"> * Temperatura fuera de rango. </label>
+                    <p style="color:Highlight; font-size:small"><i><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Temperatura Normal: 36° a 37.5°)</strong></i></p>
+                    
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <!--Fiebre 37-->
+                    <label>-&nbsp;Fiebre mayor a 37.5 °C: </label>&nbsp;&nbsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Sí <input type="radio" name="sintoma1" value="1" id="1" onclick="checkTemperaturaSuperior();" required></label>&nbsp;&nbsp;
+                    <label>No <input type="radio" name="sintoma1" value="0" id="noCheck1" onclick="checkTemperaturaSuperior();"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>-&nbsp;Tos Seca: </label>&nbsp;&nbsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Sí <input type="radio" name="sintoma2" value="1" id="2" required></label>&nbsp;&nbsp;
+                    <label>No <input type="radio" name="sintoma2" value="0" id="noCheck2"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>-&nbsp;Cansancio: </label> &nbsp;&nbsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Sí <input type="radio" name="sintoma3" value="1" id="3" required></label>&nbsp;&nbsp;
+                    <label>No <input type="radio" name="sintoma3" value="0" id="noCheck3"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>-&nbsp;Molestias y Dolores: </label> &nbsp;&nbsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Sí <input type="radio" name="sintoma4" value="1" id="4" required></label>&nbsp;&nbsp;
+                    <label>No <input type="radio" name="sintoma4" value="0" id="noCheck4"></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>-&nbsp;Dolor de garganta: </label> &nbsp;&nbsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Sí <input type="radio" name="sintoma5" value="1" id="5" required></label>&nbsp;&nbsp;
+                    <label>No <input type="radio" name="sintoma5" value="0" id="noCheck5"></label>
+                </div>
+            </div>
+        </div>
+        <div style="height:5px;"></div>
+        <!--Adicional-->
+        <div id="bordesazules">
+            @*<div><strong><p style="float:right; text-align:right;">Sintomas Adicionales&nbsp;&nbsp; </p></strong></div>*@
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>-&nbsp;Diarrea: </label> &nbsp;&nbsp;
+            </div>
+            <div class="col-md-3">
+                <label>Sí <input type="radio" name="sintoma6" value="1" id="6" required></label>&nbsp;&nbsp;
+                <label>No <input type="radio" name="sintoma6" value="0" id="noCheck6"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>-&nbsp;Conjuntivitis: </label> &nbsp;&nbsp;
+            </div>
+            <div class="col-md-3">
+                <label>Sí <input type="radio" name="sintoma7" value="1" id="7" required></label>&nbsp;&nbsp;
+                <label>No <input type="radio" name="sintoma7" value="0" id="noCheck7"></label>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>-&nbsp;Dolor de cabeza: </label> &nbsp;&nbsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Sí <input type="radio" name="sintoma8" value="1" id="8" required></label>&nbsp;&nbsp;
+                    <label>No <input type="radio" name="sintoma8" value="0" id="noCheck8"></label>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>-&nbsp;Pérdida del sentido del olfato y del gusto: </label> &nbsp;&nbsp;
+            </div>
+            <div class="col-md-3">
+                <label>Sí <input type="radio" name="sintoma9" value="1" id="9" required></label>&nbsp;&nbsp;
+                <label>No <input type="radio" name="sintoma9" value="0" id="noCheck9"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>
+                    -&nbsp;Erupciones cutáneas
+                    o pérdida del color en los dedos de las manos o los pies:
+                </label>&nbsp;&nbsp;
+            </div>
+            <div class="col-md-3">
+                <label>Sí <input type="radio" name="sintoma10" value="1" id="10" required></label>&nbsp;&nbsp;
+                <label>No <input type="radio" name="sintoma10" value="0" id="noCheck10"></label>
+            </div>
+        </div>
+        <!--Graves-->
+        <div style="height:5px;"></div>
+        <div id="bordesazules">
+            @*<div><strong><p style="float:right; text-align:right;">Sintomas Graves&nbsp;&nbsp; </p></strong></div>*@
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label style="">-&nbsp;Dificultad para respirar o sensación de falta de aire: </label> &nbsp;&nbsp;
+            </div>
+            <div class="col-md-3">
+                <label>Sí <input type="radio" name="sintoma11" value="1" id="11" required></label>&nbsp;&nbsp;
+                <label>No <input type="radio" name="sintoma11" value="0" id="noCheck11"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>-&nbsp;Dolor o presión del pecho: </label> &nbsp;&nbsp;
+            </div>
+            <div class="col-md-3">
+                <label>Sí <input type="radio" name="sintoma12" value="1" id="12" required></label>&nbsp;&nbsp;
+                <label>No <input type="radio" name="sintoma12" value="0" id="noCheck12"></label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label>-&nbsp;Incapacidad para hablar o moverse: </label> &nbsp;&nbsp;
+            </div>
+            <div class="col-md-3">
+                <label>Sí <input type="radio" name="sintoma13" value="1" id="13" required></label>&nbsp;&nbsp;
+                <label>No <input type="radio" name="sintoma13" value="0" id="noCheck13"></label>
+            </div>
+        </div>
+        <div style="height:20px;"></div>
+    </div>
+
+    <div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label>-&nbsp;Soy <label style="color:#fcba03">SOSPECHOSO</label> de COVID-19 (Por resultado POSITIVO en prueba rápida o contacto con persona Sospechosa o Confirmada con COVID-19):</label>&nbsp;&nbsp;
+        </div>
+        <div class="col-md-3">
+            <label>Sí <input type="radio" name="sintoma14" value="1" id="14" required></label>&nbsp;&nbsp;
+            <label>No <input type="radio" name="sintoma14" value="0" id="noCheck14"></label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label>-&nbsp;Di <label style="color:#fc0f03">POSITIVO</label> en la prueba PCR COVID19:</label>&nbsp;&nbsp;
+        </div>
+        <div class="col-md-3">
+            <label>Sí <input type="radio" name="sintoma15" value="1" id="15" required></label>&nbsp;&nbsp;
+            <label>No <input type="radio" name="sintoma15" value="0" id="noCheck15"></label>
+        </div>
+        <br />
+    </div>
+    <button type="submit" class="btn btn-primary" onclick="return validateForm(); ">NOTIFICAR</button>
+</form>
+}
