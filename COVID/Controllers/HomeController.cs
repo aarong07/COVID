@@ -330,6 +330,10 @@ public class HomeController : Controller
     }
     public ActionResult LeveAdicionalGrave(string temp, int? ageInputId, int? ageOutputName, int? sintoma1, int? sintoma2, int? sintoma3, int? sintoma4, int? sintoma5, int? sintoma6, int? sintoma7, int? sintoma8, int? sintoma9, int? sintoma10, int? sintoma11, int? sintoma12, int? sintoma13, int? sintoma14, int? sintoma15)
     {
+        if(Session["Nombre"] == null)
+        {
+            return View("Index");   
+        }
         ListaIntenso();
         ListaO();
         List<sintomas> t = new List<sintomas>();
@@ -341,6 +345,7 @@ public class HomeController : Controller
         {
             sintoma1 = 1;
         }
+
         string sqlquery4 = "INSERT INTO MSintomas (Nomina, Fecha, IdMonitoreo, Temperatura, Fiebre37, Tosseca, Cansancio, MolestiasDolores,  DolorGarganta, Diarrea, Conjuntivitis, DolorCabeza, PerdidaSentidos, ErupcionesCutaneasPerdidaColor, DificultadRespirar,  DolorPecho, IncapacidadHablarMoverse, Estuveencontacto, Dipositivo) VALUES (" +
                             (string)Session["Nomina"] + ", GETDATE(), 1 ,'" + temp.ToString() + "', " + sintoma1 + ", " + sintoma2 + ", " + sintoma3 + ", " + sintoma4 + ", " + sintoma5 + ", " + sintoma6 + "" +
                             ", " + sintoma7 + ", " + sintoma8 + ", " + sintoma9 + ", " + sintoma10 + ", " + sintoma11 + ", " + sintoma12 + ", " + sintoma13 + ", " + sintoma14 + ", " + sintoma15 + " )";
@@ -358,6 +363,7 @@ public class HomeController : Controller
             SqlCommand sqlcomm5 = new SqlCommand(sqlquery5, sqlconn);
             sqlcomm5.ExecuteNonQuery();
             sqlconn.Close();
+            Session["Nombre"] = null;
             return View("ContactoCOVID");
         }
 
@@ -369,6 +375,7 @@ public class HomeController : Controller
             SqlCommand sqlcomm6 = new SqlCommand(sqlquery6, sqlconn);
             sqlcomm6.ExecuteNonQuery();
             sqlconn.Close();
+            Session["Nombre"] = null;
             return View("PositivoCOVID");
         }
         if (sintoma11 >= 1 || sintoma12 >= 1 || sintoma13 >= 1)
@@ -376,8 +383,10 @@ public class HomeController : Controller
             return View("Grave");
         }
 
+
         if (sintoma1 == 0 && sintoma2 == 0 && sintoma3 == 0 && sintoma4 == 0 && sintoma5 == 0 && sintoma6 == 0 && sintoma7 == 0 && sintoma8 == 0 && sintoma9 == 0 && sintoma10 == 0 && sintoma11 == 0 && sintoma12 == 0 && sintoma13 == 0 && sintoma14 == 0 && sintoma15 == 0)
         {
+            Session["Nombre"] = null;
             return View("SigueConTuVida");
         }
 
@@ -411,6 +420,10 @@ public class HomeController : Controller
     //Monitoreo Por Sintomas
     public ActionResult SubirArchivos(HttpPostedFileBase file, int? nivel, int? nivel1, int? nivel2, int? nivel3, int? nivel4, int? nivel5, int? nivel6, int? nivel7, int? nivel8, int? nivel9, int? nivel10, int? nivel11, int? nivel12, int? nivel13, string temp, int? sintoma14, int? sintoma15)
     {
+        if (Session["Nombre"] == null)
+        {
+            return View("Index");
+        }
         ViewData["nombre"] = Session["Nombre"];
         List<sintomas> t = new List<sintomas>();
         SqlConnection sqlconn = new SqlConnection(cn);
@@ -480,34 +493,35 @@ public class HomeController : Controller
         {
             sintoma15 = 0;
         }
-            if (file == null)
+        if (file == null)
         {
             string sqlquery4 = "INSERT INTO MSintomas (Nomina, Fecha, IdMonitoreo, Temperatura, Fiebre37, Tosseca, Cansancio, MolestiasDolores,  DolorGarganta, Diarrea, Conjuntivitis, DolorCabeza, PerdidaSentidos, ErupcionesCutaneasPerdidaColor, DificultadRespirar,  DolorPecho, IncapacidadHablarMoverse, Oximetro, Estuveencontacto, Dipositivo) VALUES (" + 
-                    (string)Session["Nomina"] + ",GETDATE(), 2," + temp + ", " + nivel + " , " + nivel1 + ", " + nivel2 + ", " + nivel3 + ", " + nivel4 + ", " + nivel5 + "" +
-                    ", " + nivel6 + ", " + nivel7 + ", " + nivel8 + ", " + nivel9 + ", " + nivel10 + ", " + nivel11 + ", " + nivel12 + ", " + nivel13 + ", " + sintoma14 + ", " + sintoma15 + ")";
-                sqlconn.Open();
-                SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
-                sqlcomm4.ExecuteNonQuery();
-                sqlconn.Close();
-
-            }
+                (string)Session["Nomina"] + ",GETDATE(), 2," + temp + ", " + nivel + " , " + nivel1 + ", " + nivel2 + ", " + nivel3 + ", " + nivel4 + ", " + nivel5 + "" +
+                ", " + nivel6 + ", " + nivel7 + ", " + nivel8 + ", " + nivel9 + ", " + nivel10 + ", " + nivel11 + ", " + nivel12 + ", " + nivel13 + ", " + sintoma14 + ", " + sintoma15 + ")";
+            sqlconn.Open();
+            SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
+            sqlcomm4.ExecuteNonQuery();
+            sqlconn.Close();
+            Session["Nombre"] = null;
+        }
         else
         {
             //CargarArchivo
             string archivo = "~/Uploads/" + (DateTime.Now.ToString("yyyyMMdd") + "-" + file.FileName).ToLower();
             file.SaveAs(Server.MapPath(archivo));
-                //Monitoreo Sintomas ID=4, Monitoreo Sospechoso ID=5
-                string sqlquery4 = "INSERT INTO MSintomas (Nomina, Fecha, IdMonitoreo, Temperatura, Fiebre37, Tosseca, Cansancio, MolestiasDolores,  DolorGarganta, Diarrea, Conjuntivitis, DolorCabeza, PerdidaSentidos, ErupcionesCutaneasPerdidaColor, DificultadRespirar,  DolorPecho, IncapacidadHablarMoverse, Oximetro,Receta) VALUES (" +
-                        (string)Session["Nomina"] + ",GETDATE(), 2 ," + nivel + ", " + temp + " , " + nivel1 + ", " + nivel2 + ", " + nivel3 + ", " + nivel4 + ", " + nivel5 + "" +
-                    ", " + nivel6 + ", " + nivel7 + ", " + nivel8 + ", " + nivel9 + ", " + nivel10 + ", " + nivel11 + ", " + nivel12 + ", " + nivel13 + ", '" + archivo + "', " + sintoma14 + ", " + sintoma15 + ")";
-                sqlconn.Open();
-                SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
-                sqlcomm4.ExecuteNonQuery();
-                sqlconn.Close();
-              
+            //Monitoreo Sintomas ID=4, Monitoreo Sospechoso ID=5
+            string sqlquery4 = "INSERT INTO MSintomas (Nomina, Fecha, IdMonitoreo, Temperatura, Fiebre37, Tosseca, Cansancio, MolestiasDolores,  DolorGarganta, Diarrea, Conjuntivitis, DolorCabeza, PerdidaSentidos, ErupcionesCutaneasPerdidaColor, DificultadRespirar,  DolorPecho, IncapacidadHablarMoverse, Oximetro,Receta) VALUES (" +
+                    (string)Session["Nomina"] + ",GETDATE(), 2 ," + nivel + ", " + temp + " , " + nivel1 + ", " + nivel2 + ", " + nivel3 + ", " + nivel4 + ", " + nivel5 + "" +
+                ", " + nivel6 + ", " + nivel7 + ", " + nivel8 + ", " + nivel9 + ", " + nivel10 + ", " + nivel11 + ", " + nivel12 + ", " + nivel13 + ", '" + archivo + "', " + sintoma14 + ", " + sintoma15 + ")";
+            sqlconn.Open();
+            SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
+            sqlcomm4.ExecuteNonQuery();
+            sqlconn.Close();
+            Session["Nombre"] = null;
         }
         if (nivel10 != 0 || nivel11 != 0 || nivel12 != 0)
         {
+            Session["Nombre"] = null;
             return View("Grave2");
         }
         return View("LeveAdicional2");
@@ -515,6 +529,10 @@ public class HomeController : Controller
     //Monitoreo a Tuve contacto con un sospechoso o positivo a covid
     public ActionResult SubirArchivos2(HttpPostedFileBase file, int? nivel, int? nivel1, int? nivel2, int? nivel3, int? nivel4, int? nivel5, int? nivel6, int? nivel7, int? nivel8, int? nivel9, int? nivel10, int? nivel11, int? nivel12, int? nivel13, string temp, int? sintoma15)
     {
+        if (Session["Nombre"] == null)
+        {
+            return View("Index");
+        }
         ViewData["nombre"] = Session["Nombre"];
         List<sintomas> t = new List<sintomas>();
         SqlConnection sqlconn = new SqlConnection(cn);
@@ -593,7 +611,7 @@ public class HomeController : Controller
             SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
             sqlcomm4.ExecuteNonQuery();
             sqlconn.Close();
-
+            Session["Nombre"] = null;
         }
         else
         {
@@ -608,6 +626,7 @@ public class HomeController : Controller
             SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
             sqlcomm4.ExecuteNonQuery();
             sqlconn.Close();
+            Session["Nombre"] = null;
         }
         if (sintoma15 >= 1 )
         {
@@ -628,6 +647,10 @@ public class HomeController : Controller
     //Monitoreo Sali Positivo.
     public ActionResult SubirArchivos3(HttpPostedFileBase file, int? nivel, int? nivel1, int? nivel2, int? nivel3, int? nivel4, int? nivel5, int? nivel6, int? nivel7, int? nivel8, int? nivel9, int? nivel10, int? nivel11, int? nivel12, int? nivel13, string temp)
     {
+        if (Session["Nombre"] == null)
+        {
+            return View("Index");
+        }
         ViewData["nombre"] = Session["Nombre"];
         List<sintomas> t = new List<sintomas>();
         SqlConnection sqlconn = new SqlConnection(cn);
@@ -698,7 +721,7 @@ public class HomeController : Controller
                 SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
                 sqlcomm4.ExecuteNonQuery();
                 sqlconn.Close();
-
+                Session["Nombre"] = null;
             }
             else
             {
@@ -713,12 +736,16 @@ public class HomeController : Controller
                 SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
                 sqlcomm4.ExecuteNonQuery();
                 sqlconn.Close();
-
+                Session["Nombre"] = null;
             }
             return View("PositivoCOVIDReco");
     }
     public ActionResult Formulario(int? evento, int? viaje, int? contacto, string fechacontacto, int? vive, string convivencia, string lugarcontagio, string fechacontagio, int? sintoma, string fechasintoma, string estadosalud, string sintomasprev, string ultimodia, string contactolaboral, string interaccion, string areas )
     {
+        if (Session["Nombre"] == null)
+        {
+            return View("Index");
+        }
         ViewData["nombre"] = Session["Nombre"];
         string vacio = null;
         if (evento == null)
@@ -755,7 +782,7 @@ public class HomeController : Controller
             SqlCommand sqlcomm = new SqlCommand(sqlquery, sqlconn);
             sqlcomm.ExecuteNonQuery();
             sqlconn.Close();
-
+            Session["Nombre"] = null;
 
         return View("ContactoReco");
     }
@@ -886,6 +913,5 @@ public class HomeController : Controller
     {
             return View();
     }
-
 }
 }

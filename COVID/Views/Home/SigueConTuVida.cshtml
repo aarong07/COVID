@@ -81,36 +81,34 @@
             color: black;
         }
 </style>
-<div style="height:100px;"></div>
+<div style="height:50px;"></div>
 <!--<h2 style="text-align:center;">RECOMENDACIONES</h2>-->
 
 
 <div class="button button1">
     <div style="text-align:center;">
-        <br />
-        <p> @DateTime.Now.ToString("ddMM") - @ViewData["nomina"] - <label id="shortname" style="font-weight:normal;"></label></p>
-        <p style="font-size:60px;">@DateTime.Now.ToString("dd - MMM")</p>
+        @*<p style="font-size:10px;"> @DateTime.Now.ToString("ddMM") - @ViewData["nomina"] - <label id="shortname" style="font-weight: normal;text-transform:uppercase"></label></p>*@
+        <p style="font-size:60px;">@DateTime.Now.ToString("dd - MMM").ToUpper()</p>
         <svg id="barcode"></svg>
         <br />
         <label style="font-size:25px;"><strong>@ViewData["nomina"]</strong></label>
         <input type="text" id="nomi" value="@ViewData["nomina"]" hidden />
-        <br /> 
+        <br /> <br />
         <label style="font-size: 25px;text-transform:uppercase;"> <strong>@ViewData["nombre"]</strong></label>
         <input type="text" id="name" value="@ViewData["nombre"]" hidden />
+        <br /><br />
+        <label style="font-size:15px;"><strong>¡Gracias por tu colaboración!</strong></label>
         <br />
-        <label style="font-size:25px;"><strong>¡Gracias por tu colaboración!</strong></label>
         <br />
-        <br />
-        <label style="font-size:16px;">
+        <label style="font-size:15px;">
             Monitorea tu salud diariamente y sigue las medidas de prevención e higiene.
         </label>
         <br />
         <label style="font-size:16px;">
             Puedes asistir a trabajar sin problema.
         </label>
-        <br />
-        <p>@DateTime.Now.ToString("yyyy-MM-dd HH:mm tt")</p>
-
+        <br /><br />
+        <p style="font-size:10px;">@DateTime.Now.ToString("yyyy-MM-dd HH:mm tt").ToUpper()</p>
     </div>
 </div>
 <div style="height:25px"></div>

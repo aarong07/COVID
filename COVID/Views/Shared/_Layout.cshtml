@@ -91,14 +91,15 @@
     var name = document.getElementById("name").value;
     var str = name;
     var res = str.split(" ", 1);
-    document.getElementById("shortname").innerHTML = res;
+    //document.getElementById("shortname").innerHTML = res;
     var total = "0" + fecha + "-" + nomina + "-" + res;
     JsBarcode("#barcode", total, {
         format: "CODE39",
         lineColor: "#ffff",
-        width: 1,
+        width: 0.8,
         height: 40,
         background: false,
-        displayValue: false
+        displayValue: true, 
+        fontSize: 15
     });
 </script>
