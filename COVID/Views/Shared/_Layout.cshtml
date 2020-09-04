@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    @*<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>*@
+    <!--CODIGO DE BARRAS-->
     <script src="~/Content/JsBarcode.all.min.js"></script>
+    <script src="~/Content/qrcode.js"></script>
+    <script src="~/Content/qrcode.min.js"></script>
     <style>
 
         #logo {
@@ -33,7 +35,7 @@
             right: 15%;
         }
     </style>
-
+    
 </head>
 <body onload="BotonesVisibles(); BotonesVisibles_Dipositivo(); ">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -91,7 +93,7 @@
     var name = document.getElementById("name").value;
     var str = name;
     var res = str.split(" ", 1);
-    //document.getElementById("shortname").innerHTML = res;
+    document.getElementById("shortname").innerHTML = res;
     var total = "0" + fecha + "-" + nomina + "-" + res;
     JsBarcode("#barcode", total, {
         format: "CODE39",
@@ -102,4 +104,8 @@
         displayValue: true, 
         fontSize: 15
     });
+
+    
+
+
 </script>

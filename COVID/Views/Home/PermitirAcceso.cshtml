@@ -1,0 +1,98 @@
+﻿<div style="height:50px;"></div>
+<!--<h2 style="text-align:center;">RECOMENDACIONES</h2>-->
+<style>
+    li {
+        text-align: justify;
+    }
+
+
+    /*label {
+            display: inline-block;
+            width: 140px;
+        }*/
+    .button {
+        border: 1px solid #267226;
+        background-color: #24A616; /* Green */
+        color: white;
+        padding: 30px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        width: 100%;
+        height: 20%;
+    }
+
+    .button1 {
+        background-color: #24A616;
+        color: white;
+        border: 2px solid #267226;
+    }
+
+        .button1:hover {
+            background-color: #24A616;
+            color: white;
+        }
+
+    .button2 {
+        background-color: white;
+        color: black;
+        border: 2px solid #169abe;
+    }
+
+        .button2:hover {
+            background-color: #169abe;
+            color: black;
+        }
+
+    .button3 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ffd800;
+    }
+
+        .button3:hover {
+            background-color: #ffd800;
+            color: black;
+        }
+
+    .button4 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ffd800;
+    }
+
+        .button4:hover {
+            background-color: #ffd800;
+            color: black;
+        }
+
+    .button5 {
+        background-color: white;
+        color: black;
+        border: 2px solid #ff0000;
+    }
+
+        .button5:hover {
+            background-color: #ff0000;
+            color: black;
+        }
+</style>
+<div class="button button1">
+    <div style="text-align:center;">
+        <label style="font-size:25px;">PERMITIR INGRESO</label>
+        <br />
+        <br />
+        <label style="font-size:25px;text-transform:uppercase;"><strong>@ViewData["nombre"]</strong></label>
+        <br /><br />
+        <div>
+            <button class="btn btn-primary" onclick="location.href='@Url.Action("Index","Home")'">SALIR</button>
+        </div>
+    </div>
+</div>
+<div style="height:25px"></div>
+
+<div style="height:25px"></div>

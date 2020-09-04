@@ -4,11 +4,15 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using ZXing;
+using ZXing.QrCode.Internal;
+using ZXing.Rendering;
 
 namespace COVID.Controllers
 {
@@ -39,7 +43,7 @@ public class HomeController : Controller
         List<trabajador> t = new List<trabajador>();
         SqlConnection sqlconn = new SqlConnection(cn);
         //string sqlquery = "Select t.Nomina, Nombre, IdSitio, IdArea, IdProceso, IdTurno, t.Receta, ComprobanteCOVID, Telefono, ms.Estuveencontacto , ms.dipositivo  from Trabajador t inner join MSintomas ms on t.nomina = ms.nomina where t.Nomina ='"+nomina1+"'";
-        string sqlquery = "Select t.Nomina,t.RegresarAlMonitoreo, t.RegresarASospecha, t.RegresarAPositivo,t.Vulnerable ,Nombre, IdSitio, IdArea, IdProceso, IdTurno, t.Receta, ComprobanteCOVID, Telefono " +
+        string sqlquery = "Select t.Nomina,t.RegresarAlMonitoreo, t.RegresarASospecha, t.RegresarAPositivo,t.Vulnerable ,Nombre, IdSitio, IdArea, IdProceso, IdTurno, t.Receta, ComprobanteCOVID, Telefono, QRFecha " +
         "from Trabajador t  " +
         "where t.Nomina = '" + nomina1 + "'";
         SqlCommand sqlcomm = new SqlCommand(sqlquery, sqlconn);
@@ -66,6 +70,7 @@ public class HomeController : Controller
             tt.Vulnerable = int.Parse(dr["Vulnerable"].ToString());
             tt.RegresarASospecha = int.Parse(dr["RegresarASospecha"].ToString());
             tt.RegresarAPositivo = int.Parse(dr["RegresarAPositivo"].ToString());
+            tt.QRFecha = dr["QRFecha"].ToString();
             t.Add(tt);
             sqlconn.Close();
 
@@ -84,6 +89,7 @@ public class HomeController : Controller
             ViewData["RegresarPositivo"] = tt.RegresarAPositivo;
             ViewData["Vulnerable"] = tt.Vulnerable;
 
+            Session["Fecha"] = tt.QRFecha;
 
             string nombre = (string)ViewData["Nombre"];
             Session["Nombre"] = nombre;
@@ -255,65 +261,68 @@ public class HomeController : Controller
         List<trabajador> t = new List<trabajador>();
         SqlConnection sqlconn = new SqlConnection(cn);
         DataTable dt = new DataTable();
-        switch (boton)
-        {
-            case 1:
-                ViewData["nombre"] = Session["Nombre"];
-                ViewData["Nomina"] = Session["Nomina"];
-                string sqlquery = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 1, Vulnerable = '"+ personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
-                sqlconn.Open();
-                SqlCommand sqlcomm = new SqlCommand(sqlquery, sqlconn);
-                sqlcomm.ExecuteNonQuery();
-                sqlconn.Close();
-                return View("NSintomas");
-            case 2:
-                ViewData["nombre"] = Session["Nombre"];
-                string sqlquery1 = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 1, Vulnerable = '" + personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
-                sqlconn.Open();
-                SqlCommand sqlcomm1 = new SqlCommand(sqlquery1, sqlconn);
-                sqlcomm1.ExecuteNonQuery();
-                sqlconn.Close();
-                return View("MonitoreoPS");
-            case 3:
-                ViewData["nombre"] = Session["Nombre"];
-                string sqlquery2 = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 0, Vulnerable = '" + personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
-                sqlconn.Open();
-                SqlCommand sqlcomm2 = new SqlCommand(sqlquery2, sqlconn);
-                sqlcomm2.ExecuteNonQuery();
-                sqlconn.Close();
-                return View("ContactoCOVID");
-            case 4:
-                ViewData["nombre"] = Session["Nombre"];
-                string sqlquery3 = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 0, Vulnerable = '" + personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
-                sqlconn.Open();
-                SqlCommand sqlcomm3 = new SqlCommand(sqlquery3, sqlconn);
-                sqlcomm3.ExecuteNonQuery();
-                sqlconn.Close();
-                return View("Sospecha");
-            case 5:
-                ListaIntenso();
-                ListaO();
-                ViewData["nombre"] = Session["Nombre"];
-                string sqlquery4 = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 0, Vulnerable = '" + personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
-                sqlconn.Open();
-                SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
-                sqlcomm4.ExecuteNonQuery();
-                sqlconn.Close();
-                return View("PositivoCOVID");
-            case 6:
-                return View("Confirmacion");
-            case 7:
-                ViewData["nombre"] = Session["Nombre"];
-                string sqlquery5 = "UPDATE Trabajador SET RegresarAlMonitoreo = '1', RegresarASospecha = '0', RegresarAPositivo = '0' WHERE Nomina = '" + Session["Nomina"] +"'";
-                sqlconn.Open();
-                SqlCommand sqlcomm5 = new SqlCommand(sqlquery5, sqlconn);
-                sqlcomm5.ExecuteNonQuery();
-                sqlconn.Close();
-                return View("NSintomas");
-            case 8:
-                Inicio(st, (string)Session["Nomina"]);
-                return View("Inicio");
-                }
+            switch (boton)
+            {
+                case 1:
+                    ViewData["nombre"] = Session["Nombre"];
+                    ViewData["Nomina"] = Session["Nomina"];
+                    string sqlquery = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 1, Vulnerable = '" + personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
+                    sqlconn.Open();
+                    SqlCommand sqlcomm = new SqlCommand(sqlquery, sqlconn);
+                    sqlcomm.ExecuteNonQuery();
+                    sqlconn.Close();
+                    return View("NSintomas");
+                case 2:
+                    ViewData["nombre"] = Session["Nombre"];
+                    string sqlquery1 = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 1, Vulnerable = '" + personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
+                    sqlconn.Open();
+                    SqlCommand sqlcomm1 = new SqlCommand(sqlquery1, sqlconn);
+                    sqlcomm1.ExecuteNonQuery();
+                    sqlconn.Close();
+                    return View("MonitoreoPS");
+                case 3:
+                    ViewData["nombre"] = Session["Nombre"];
+                    string sqlquery2 = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 0, Vulnerable = '" + personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
+                    sqlconn.Open();
+                    SqlCommand sqlcomm2 = new SqlCommand(sqlquery2, sqlconn);
+                    sqlcomm2.ExecuteNonQuery();
+                    sqlconn.Close();
+                    return View("ContactoCOVID");
+                case 4:
+                    ViewData["nombre"] = Session["Nombre"];
+                    string sqlquery3 = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 0, Vulnerable = '" + personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
+                    sqlconn.Open();
+                    SqlCommand sqlcomm3 = new SqlCommand(sqlquery3, sqlconn);
+                    sqlcomm3.ExecuteNonQuery();
+                    sqlconn.Close();
+                    return View("Sospecha");
+                case 5:
+                    ListaIntenso();
+                    ListaO();
+                    ViewData["nombre"] = Session["Nombre"];
+                    string sqlquery4 = "UPDATE Trabajador SET IdSitio = " + sitio + ", IdArea = " + area + ", IdProceso = " + proceso + ", IdTurno = " + turno + ",  Telefono = '" + telefono + "', RegresarAlMonitoreo = 0, Vulnerable = '" + personalvulne + "' where Nomina = '" + (string)Session["Nomina"] + "'";
+                    sqlconn.Open();
+                    SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
+                    sqlcomm4.ExecuteNonQuery();
+                    sqlconn.Close();
+                    return View("PositivoCOVID");
+                case 6:
+                    return View("Confirmacion");
+                case 7:
+                    ViewData["nombre"] = Session["Nombre"];
+                    string sqlquery5 = "UPDATE Trabajador SET RegresarAlMonitoreo = '1', RegresarASospecha = '0', RegresarAPositivo = '0' WHERE Nomina = '" + Session["Nomina"] + "'";
+                    sqlconn.Open();
+                    SqlCommand sqlcomm5 = new SqlCommand(sqlquery5, sqlconn);
+                    sqlcomm5.ExecuteNonQuery();
+                    sqlconn.Close();
+                    return View("NSintomas");
+                case 8:
+                    Inicio(st, (string)Session["Nomina"]);
+                    return View("Inicio");
+                //case 9:
+                //    PermitirAcceso((string)Session["Nombre"], (string)Session["Nomina"]);
+                //    return View("PermitirAcceso");
+            }
         return View("Inicio");
     }
     public ActionResult BotonesInicio()
@@ -328,7 +337,7 @@ public class HomeController : Controller
     {
         return View();
     }
-    public ActionResult LeveAdicionalGrave(string temp, int? ageInputId, int? ageOutputName, int? sintoma1, int? sintoma2, int? sintoma3, int? sintoma4, int? sintoma5, int? sintoma6, int? sintoma7, int? sintoma8, int? sintoma9, int? sintoma10, int? sintoma11, int? sintoma12, int? sintoma13, int? sintoma14, int? sintoma15)
+    public ActionResult LeveAdicionalGrave(trabajador st, string nomina , string temp, int? ageInputId, int? ageOutputName, int? sintoma1, int? sintoma2, int? sintoma3, int? sintoma4, int? sintoma5, int? sintoma6, int? sintoma7, int? sintoma8, int? sintoma9, int? sintoma10, int? sintoma11, int? sintoma12, int? sintoma13, int? sintoma14, int? sintoma15)
     {
         if(Session["Nombre"] == null)
         {
@@ -378,15 +387,22 @@ public class HomeController : Controller
             Session["Nombre"] = null;
             return View("PositivoCOVID");
         }
+
         if (sintoma11 >= 1 || sintoma12 >= 1 || sintoma13 >= 1)
         {
             return View("Grave");
         }
 
-
         if (sintoma1 == 0 && sintoma2 == 0 && sintoma3 == 0 && sintoma4 == 0 && sintoma5 == 0 && sintoma6 == 0 && sintoma7 == 0 && sintoma8 == 0 && sintoma9 == 0 && sintoma10 == 0 && sintoma11 == 0 && sintoma12 == 0 && sintoma13 == 0 && sintoma14 == 0 && sintoma15 == 0)
         {
+            Inicio(st, nomina);
             Session["Nombre"] = null;
+            QRCODE();
+            string sqlquery = "UPDATE Trabajador SET QRFecha = '" + Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss") + "' WHERE Nomina = '" + (string)Session["Nomina"] + "'";
+            sqlconn.Open();
+            SqlCommand sqlcomm = new SqlCommand(sqlquery, sqlconn);
+            sqlcomm.ExecuteNonQuery();
+            sqlconn.Close();
             return View("SigueConTuVida");
         }
 
@@ -911,7 +927,42 @@ public class HomeController : Controller
     }
     public ActionResult SigueConTuVida()
     {
-            return View();
+        
+        return View();
     }
-}
+    public ActionResult PermitirAcceso(trabajador st, string nomina)
+    {
+        //ViewData["Nombre"] = nomina;
+        Inicio(st, nomina);
+        //if(DateTime.Now>f)
+        return View();
+    }
+    void QRCODE()
+    {
+        // Generar el QR
+        //string UrlQR = ConfigurationManager.AppSettings["BaseURL"] + "Visits/ValidateAccessCode/"; //+ IdB64;
+        var barcodeWriter = new BarcodeWriter();
+        // set the barcode format
+        barcodeWriter.Format = BarcodeFormat.QR_CODE;
+        var encOptions = new ZXing.Common.EncodingOptions
+        {
+            Width = 200,
+            Height = 200,
+            Margin = 0,
+            PureBarcode = false
+        }
+        ;
+        encOptions.Hints.Add(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+        barcodeWriter.Renderer = new BitmapRenderer();
+        barcodeWriter.Options = encOptions;
+        // instantiate a writer object
+        //var barcodeWriter = new BarcodeWriter();
+        // write text and generate a 2-D barcode as a bitmap 
+        barcodeWriter
+        .Write("http://ccswebti.cartonsultana.com.mx/covid/Home/PermitirAcceso?nomina="+ (string)Session["Nomina"] +"")
+        //.Write("://localhost:44329/Home/PermitirAcceso")
+        .Save(@"C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\Content\generated.bmp");   
+
+    }
+    }
 }

@@ -28,6 +28,7 @@ namespace COVID.Models
         public int Vulnerable { get; set; }
         public int RegresarASospecha { get; set; }
         public int RegresarAPositivo { get; set; }
+        public string QRFecha { get; set; }
 
 
     }

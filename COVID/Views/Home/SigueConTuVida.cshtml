@@ -84,12 +84,12 @@
 <div style="height:50px;"></div>
 <!--<h2 style="text-align:center;">RECOMENDACIONES</h2>-->
 
-
 <div class="button button1">
     <div style="text-align:center;">
         @*<p style="font-size:10px;"> @DateTime.Now.ToString("ddMM") - @ViewData["nomina"] - <label id="shortname" style="font-weight: normal;text-transform:uppercase"></label></p>*@
         <p style="font-size:60px;">@DateTime.Now.ToString("dd - MMM").ToUpper()</p>
-        <svg id="barcode"></svg>
+        @*<svg id="barcode"></svg>*@
+        <img src="~/Content/generated.bmp" />
         <br />
         <label style="font-size:25px;"><strong>@ViewData["nomina"]</strong></label>
         <input type="text" id="nomi" value="@ViewData["nomina"]" hidden />

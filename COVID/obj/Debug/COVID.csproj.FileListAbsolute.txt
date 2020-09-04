@@ -428,3 +428,9 @@ C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\o
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\obj\Debug\COVID.csproj.CopyComplete
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\obj\Debug\COVID.dll
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\obj\Debug\COVID.pdb
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.dll
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.presentation.dll
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.pdb
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.xml
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.presentation.pdb
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.presentation.xml
