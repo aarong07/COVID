@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using ZXing;
@@ -24,6 +25,8 @@ public class HomeController : Controller
     //Monitoreo Sintomas ID=4, Monitoreo Sospechoso ID=5, AutoEvaluacion ID=1, Sospecha ID=2, Positivo=3
     string cn = ConfigurationManager.ConnectionStrings["Myconnection"].ConnectionString;
     bool QREncontrado;
+    string DestinoQR = WebConfigurationManager.AppSettings["DestinoQR"].ToString();
+        string guardarQR = WebConfigurationManager.AppSettings["GuardadoQR"].ToString();
     public ActionResult Index(trabajador st)
     {
         Session["Nombre"] = st.Nombre;
@@ -978,8 +981,9 @@ public class HomeController : Controller
         //PRODUCCION
         //.Write("http ://ccswebti.cartonsultana.com.mx/covid/Home/PermitirAcceso?QRGUID=" + guid +"")
         //PRUEBAS
-        .Write("https://localhost:44329/Home/PermitirAcceso?clave=" + guid + "")
-        .Save(@"C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\Content\" + guid + ".bmp");   
+        .Write(DestinoQR + guid + "")
+        .Save(guardarQR  + guid + ".bmp");  
+            
     }
     public ActionResult Msintomas(string clave)
     {
