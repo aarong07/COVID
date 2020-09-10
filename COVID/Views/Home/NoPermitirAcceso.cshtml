@@ -12,7 +12,7 @@
         }*/
     .button {
         border: 1px solid #267226;
-        background-color: #24A616; /* Green */
+        background-color: #ff0000; /* Green */
         color: white;
         padding: 30px 10px;
         text-align: center;
@@ -27,13 +27,13 @@
     }
 
     .button1 {
-        background-color: #24A616;
+        background-color: #ff0000;
         color: white;
         border: 2px solid #267226;
     }
 
         .button1:hover {
-            background-color: #24A616;
+            background-color: #ff0000;
             color: white;
         }
 
@@ -81,14 +81,16 @@
             color: black;
         }
 </style>
-<div class="button button1">
-    <div style="text-align:center;">
-        <div style="height:130px;"></div>
-        <label style="font-size:25px;">PERMITIR INGRESO</label>
+<div class="button button1 container">
+    <div style="">
+        <div style="height:120px;"></div>
+        <label style="font-size:25px;text-align:center;">DENEGAR INGRESO</label>
         <br /><br /><br />
         <br />
-        <label style="font-size:25px;text-transform:uppercase;"><strong>@ViewData["nombre"]</strong></label>
-        <br /><br /><br /><br /><br />
+        <label style="font-size:25px;text-transform:uppercase;text-align:center;"><strong>MONITOREO NO REALIZADO HOY</strong></label>
+        <br /><br />
+        <label style="text-align:justify;">Solicitar que realice su monitoreo posteriormente realiza el escaneo del codigo para conceder el acceso.</label>
+        <br /><br /><br /><br />
         <div>
             <button class="btn btn-primary" onclick="location.href='@Url.Action("Index","Home")'">SALIR</button>
         </div>
@@ -97,4 +99,5 @@
 </div>
 <div style="height:25px"></div>
 
-<div style="height:25px"></div>
+
+

@@ -8,6 +8,7 @@ namespace COVID.Models
     public class sintomas
     {
         public int ID { get; set; }
+        public string Nombre { get; set; }
         public string Nomina { get; set; }
         public string Fecha { get; set; }
         public string IdMonitoreo { get; set; }
@@ -27,5 +28,8 @@ namespace COVID.Models
         public string IncapacidadHablarMoverse { get; set; }
         public string Oximetro { get; set; }
         public string Receta { get; set; }
+        public string QRGUID{ get; set; }
+        public string Escaneado { get; set; }
+
     }
 }

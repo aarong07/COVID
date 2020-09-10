@@ -23,6 +23,7 @@ public class HomeController : Controller
     //SqlDataReader dr;
     //Monitoreo Sintomas ID=4, Monitoreo Sospechoso ID=5, AutoEvaluacion ID=1, Sospecha ID=2, Positivo=3
     string cn = ConfigurationManager.ConnectionStrings["Myconnection"].ConnectionString;
+    bool QREncontrado;
     public ActionResult Index(trabajador st)
     {
         Session["Nombre"] = st.Nombre;
@@ -350,14 +351,18 @@ public class HomeController : Controller
         DataTable dt = new DataTable();
         ViewData["nombre"] = Session["Nombre"];
         ViewData["Nomina"] = Session["Nomina"];
+        Guid g = Guid.NewGuid();
+        Console.WriteLine(g);
+        Console.WriteLine(Guid.NewGuid());
+        string guid = (g).ToString();
         if (Convert.ToDouble(temp) >= 37.5)
         {
             sintoma1 = 1;
         }
 
-        string sqlquery4 = "INSERT INTO MSintomas (Nomina, Fecha, IdMonitoreo, Temperatura, Fiebre37, Tosseca, Cansancio, MolestiasDolores,  DolorGarganta, Diarrea, Conjuntivitis, DolorCabeza, PerdidaSentidos, ErupcionesCutaneasPerdidaColor, DificultadRespirar,  DolorPecho, IncapacidadHablarMoverse, Estuveencontacto, Dipositivo) VALUES (" +
+        string sqlquery4 = "INSERT INTO MSintomas (Nomina, Fecha, IdMonitoreo, Temperatura, Fiebre37, Tosseca, Cansancio, MolestiasDolores,  DolorGarganta, Diarrea, Conjuntivitis, DolorCabeza, PerdidaSentidos, ErupcionesCutaneasPerdidaColor, DificultadRespirar,  DolorPecho, IncapacidadHablarMoverse, Estuveencontacto, Dipositivo, QRGUID) VALUES (" +
                             (string)Session["Nomina"] + ", GETDATE(), 1 ,'" + temp.ToString() + "', " + sintoma1 + ", " + sintoma2 + ", " + sintoma3 + ", " + sintoma4 + ", " + sintoma5 + ", " + sintoma6 + "" +
-                            ", " + sintoma7 + ", " + sintoma8 + ", " + sintoma9 + ", " + sintoma10 + ", " + sintoma11 + ", " + sintoma12 + ", " + sintoma13 + ", " + sintoma14 + ", " + sintoma15 + " )";
+                            ", " + sintoma7 + ", " + sintoma8 + ", " + sintoma9 + ", " + sintoma10 + ", " + sintoma11 + ", " + sintoma12 + ", " + sintoma13 + ", " + sintoma14 + ", " + sintoma15 + ", '" + guid + "' )";
         sqlconn.Open();
         SqlCommand sqlcomm4 = new SqlCommand(sqlquery4, sqlconn);
         sqlcomm4.ExecuteNonQuery();
@@ -395,15 +400,14 @@ public class HomeController : Controller
 
         if (sintoma1 == 0 && sintoma2 == 0 && sintoma3 == 0 && sintoma4 == 0 && sintoma5 == 0 && sintoma6 == 0 && sintoma7 == 0 && sintoma8 == 0 && sintoma9 == 0 && sintoma10 == 0 && sintoma11 == 0 && sintoma12 == 0 && sintoma13 == 0 && sintoma14 == 0 && sintoma15 == 0)
         {
-            Inicio(st, nomina);
-            Session["Nombre"] = null;
-            QRCODE();
-            string sqlquery = "UPDATE Trabajador SET QRFecha = '" + Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss") + "' WHERE Nomina = '" + (string)Session["Nomina"] + "'";
-            sqlconn.Open();
-            SqlCommand sqlcomm = new SqlCommand(sqlquery, sqlconn);
-            sqlcomm.ExecuteNonQuery();
-            sqlconn.Close();
-            return View("SigueConTuVida");
+        QRCODE(guid);
+        Session["Nombre"] = null;
+        //    string sqlquery = "UPDATE MSintomas SET QRGUID = '" + guid + "' WHERE Nomina = '" + (string)Session["Nomina"] + "' AND Fecha = '" + Convert.ToDateTime(DateTime.Now.Date).ToString("yyyy-MM-dd") + "'";
+        //sqlconn.Open();
+        //SqlCommand sqlcomm = new SqlCommand(sqlquery, sqlconn);
+        //sqlcomm.ExecuteNonQuery();
+        //sqlconn.Close();
+        return View("SigueConTuVida");
         }
 
         return View("LeveAdicional");
@@ -930,18 +934,30 @@ public class HomeController : Controller
         
         return View();
     }
-    public ActionResult PermitirAcceso(trabajador st, string nomina)
+    public ActionResult PermitirAcceso(string clave)
     {
-        //ViewData["Nombre"] = nomina;
-        Inicio(st, nomina);
-        //if(DateTime.Now>f)
-        return View();
+        if (clave.Length > 0)
+        {
+            Msintomas(clave);
+            SqlConnection sqlconn = new SqlConnection(cn);
+            if (QREncontrado)
+            {
+                ViewData["nombre"] = Session["NombreM"];
+                string sqlquery = "UPDATE MSintomas SET Escaneado = '" + Convert.ToDateTime(DateTime.Now).ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE QRGUID = '" + clave + "'";
+                sqlconn.Open();
+                SqlCommand sqlcomm5 = new SqlCommand(sqlquery, sqlconn);
+                sqlcomm5.ExecuteNonQuery();
+                sqlconn.Close();
+                return View("PermitirAcceso");
+            }
+        }
+        return View("NoPermitirAcceso");
     }
-    void QRCODE()
+    void QRCODE(string guid)
     {
         // Generar el QR
         //string UrlQR = ConfigurationManager.AppSettings["BaseURL"] + "Visits/ValidateAccessCode/"; //+ IdB64;
-        var barcodeWriter = new BarcodeWriter();
+            var barcodeWriter = new BarcodeWriter();
         // set the barcode format
         barcodeWriter.Format = BarcodeFormat.QR_CODE;
         var encOptions = new ZXing.Common.EncodingOptions
@@ -959,10 +975,63 @@ public class HomeController : Controller
         //var barcodeWriter = new BarcodeWriter();
         // write text and generate a 2-D barcode as a bitmap 
         barcodeWriter
-        .Write("http://ccswebti.cartonsultana.com.mx/covid/Home/PermitirAcceso?nomina="+ (string)Session["Nomina"] +"")
-        //.Write("://localhost:44329/Home/PermitirAcceso")
-        .Save(@"C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\Content\generated.bmp");   
+        //PRODUCCION
+        //.Write("http ://ccswebti.cartonsultana.com.mx/covid/Home/PermitirAcceso?QRGUID=" + guid +"")
+        //PRUEBAS
+        .Write("https://localhost:44329/Home/PermitirAcceso?clave=" + guid + "")
+        .Save(@"C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\Content\" + guid + ".bmp");   
+    }
+    public ActionResult Msintomas(string clave)
+    {
+        List<sintomas> t = new List<sintomas>();
+        SqlConnection sqlconn = new SqlConnection(cn);
+        string sqlquery = "SELECT t.Nombre,ms.* FROM MSintomas ms inner join Trabajador t on ms.Nomina=t.Nomina where QRGUID = '" + clave + "' AND CONVERT(VARCHAR(10),Fecha,112) = CONVERT(VARCHAR(10), GETDATE() ,112) ";
+        SqlCommand sqlcomm = new SqlCommand(sqlquery, sqlconn);
+        SqlDataAdapter sda = new SqlDataAdapter(sqlcomm);
+        DataTable dt = new DataTable();
+        sda.Fill(dt);
+        foreach (DataRow dr in dt.Rows)
+        {
+            sintomas tt = new sintomas();
+            //tt.ID = dr["ID"].ToString();
+            tt.Nomina = dr["Nomina"].ToString();
+                tt.Nombre = dr["Nombre"].ToString();
+                tt.Fecha = dr["Fecha"].ToString();
+                tt.IdMonitoreo = dr["IdMonitoreo"].ToString();
+                tt.Temperatura = dr["Temperatura"].ToString();
+                tt.Fiebre37 = dr["Fiebre37"].ToString();
+                tt.Tosseca = dr["Tosseca"].ToString();
+                tt.Cansancio = dr["Cansancio"].ToString();
+                tt.MolestiasDolores = dr["MolestiasDolores"].ToString();
+                tt.DolorGarganta = dr["DolorGarganta"].ToString();
+                tt.Diarrea = dr["Diarrea"].ToString();
+                tt.Conjuntivitis = dr["Conjuntivitis"].ToString();
+                tt.DolorCabeza = dr["DolorCabeza"].ToString();
+                tt.PerdidaSentidos = dr["PerdidaSentidos"].ToString();
+                tt.ErupcionesCutaneasPerdidaColor = dr["ErupcionesCutaneasPerdidaColor"].ToString();
+                tt.DificultadRespirar = dr["DificultadRespirar"].ToString();
+                tt.DolorPecho = dr["DolorPecho"].ToString();
+                tt.IncapacidadHablarMoverse = dr["IncapacidadHablarMoverse"].ToString();
+                tt.Oximetro = dr["Oximetro"].ToString();
+                tt.Receta = dr["Receta"].ToString();
+                tt.QRGUID = dr["QRGUID"].ToString();
+                tt.Escaneado = dr["Escaneado"].ToString();
+            t.Add(tt);
+            sqlconn.Close();
+            
+            Session["FechaM"] = tt.Fecha;
+            Session["NombreM"] = tt.Nombre;
 
+        }
+        if (t.Count > 0)
+        {
+            QREncontrado = true;
+        }
+        else
+        {
+            QREncontrado = false;
+        }
+        return View(t);
     }
-    }
+}
 }

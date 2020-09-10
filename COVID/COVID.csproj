@@ -207,6 +207,7 @@
     <Content Include="Views\Home\SigueConTuVida.cshtml" />
     <Content Include="Views\Home\Confirmacion.cshtml" />
     <Content Include="Views\Home\PermitirAcceso.cshtml" />
+    <Content Include="Views\Home\NoPermitirAcceso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

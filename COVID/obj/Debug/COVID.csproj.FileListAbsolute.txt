@@ -406,6 +406,8 @@ C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\b
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\System.Web.WebPages.dll
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\System.Web.WebPages.Razor.dll
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\WebGrease.dll
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.dll
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.presentation.dll
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\System.Web.Helpers.xml
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\System.Web.Mvc.xml
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\System.Web.Optimization.xml
@@ -415,6 +417,10 @@ C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\b
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\System.Web.WebPages.Razor.xml
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\Newtonsoft.Json.xml
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\Antlr3.Runtime.pdb
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.pdb
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.xml
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.presentation.pdb
+C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.presentation.xml
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\es\System.Web.Helpers.resources.dll
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\es\System.Web.Mvc.resources.dll
@@ -428,9 +434,3 @@ C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\o
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\obj\Debug\COVID.csproj.CopyComplete
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\obj\Debug\COVID.dll
 C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\obj\Debug\COVID.pdb
-C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.dll
-C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.presentation.dll
-C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.pdb
-C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.xml
-C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.presentation.pdb
-C:\Users\practicantesis\source\repos\COVID\COVID 02-09-2020\COVID-master\COVID\bin\zxing.presentation.xml
